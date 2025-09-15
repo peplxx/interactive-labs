@@ -10,3 +10,4 @@ mkdir -p /home/dev/recordings
 # Use Moscow time (UTC+3) for the recording filename
 DATE_TIME=$(TZ=Europe/Moscow date '+%Y-%m-%d_%H-%M-%S')
 asciinema rec -i 1 -c "zellij attach --create $USERNAME" "/home/dev/recordings/$DATE_TIME.cast"
+asciinema upload "/home/dev/recordings/$DATE_TIME.cast"

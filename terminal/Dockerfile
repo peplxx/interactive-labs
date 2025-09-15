@@ -2,7 +2,7 @@ FROM przemub/ubuntu-unminimized:24.04
 
 RUN apt-get update && \
     apt-get install -y \
-    sudo man-db vim nano wget fish asciinema xclip \
+    sudo man-db vim nano wget iputils-ping fish asciinema xclip \
     netcat-openbsd telnet file iproute2 iptables tcpdump jq unzip \
     nodejs npm node-browserify uglifyjs\
     && apt-get clean \
