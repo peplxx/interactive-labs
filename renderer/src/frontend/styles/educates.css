@@ -223,7 +223,7 @@ button#header-next-page {
 }
 
 code.magic-code-block-parent {
-    user-select: none;
+    user-select: text;
 }
 
 div.magic-code-block-title {

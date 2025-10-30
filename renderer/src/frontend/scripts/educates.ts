@@ -634,7 +634,7 @@ export function register_action(options: any) {
             if (typeof body === "function")
                 body_string = body(action_args)
 
-            $.each([title_element, parent_element], (_, target) => {
+            $.each([title_element], (_, target) => {
                 target.on("click", async (event) => {
                     if (!event.shiftKey) {
                         console.log(`[${title_string}] Execute:`, action_args)
