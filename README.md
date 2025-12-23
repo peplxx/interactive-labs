@@ -20,7 +20,7 @@ Enhance your existing workshops with a practice environment.
     labenv:
         volumes:
             - ./workspace:/home/ubuntu
-            - ./workshop:/app/slides
+            - ./workshop:/app/workshop
             - /var/run/docker.sock:/var/run/docker.sock
     app1:
         ...
@@ -41,3 +41,11 @@ cd labenv
 npm install
 npm run dev
 ```
+
+## Courses
+
+Checkout some courses utilizing the platform:
+
+- Fundamentals of Information Security: <https://github.com/Inno-CyberSec/FIS-F25>
+- Network and Cyber Security: <https://github.com/Inno-CyberSec/NCS-F25>
+- Secure System Development: <https://github.com/Inno-CyberSec/SSD-S26>
