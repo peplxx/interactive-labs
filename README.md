@@ -1,6 +1,6 @@
 # interactive-labs
 
-Self-hosted interactive workshop environment. Enhance your existing workshops with a practice environment.
+Enhance your existing workshops with a practice environment.
 
 ![screenshot](./screenshot.png)
 
