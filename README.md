@@ -1,6 +1,6 @@
 # interactive-labs
 
-Enhance your existing workshops with a practice environment.
+Complement your IT training workshops with a practice environment.
 
 ![screenshot](./screenshot.png)
 
