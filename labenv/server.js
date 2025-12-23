@@ -11,7 +11,7 @@ const entrypoint = fs.existsSync('/home/ubuntu/entrypoint') ? '/home/ubuntu/entr
 
 // Serve static files
 app.use(express.static('public'));
-app.use(express.static('slides')); // Serve slides directory for images
+app.use(express.static('workshop'));
 app.use(express.json());
 
 // Serve node_modules for frontend libraries
@@ -36,7 +36,7 @@ app.post('/clipboard', (req, res) => {
 
 // API to list slides
 app.get('/api/slides', (req, res) => {
-    const slidesDir = path.join(__dirname, 'slides');
+    const slidesDir = path.join(__dirname, 'workshop');
     if (!fs.existsSync(slidesDir)) {
         return res.json([]);
     }
@@ -46,7 +46,7 @@ app.get('/api/slides', (req, res) => {
 
 // API to get slide content
 app.get('/api/slides/:filename', (req, res) => {
-    const filepath = path.join(__dirname, 'slides', req.params.filename);
+    const filepath = path.join(__dirname, 'workshop', req.params.filename);
     if (fs.existsSync(filepath)) {
         res.send(fs.readFileSync(filepath, 'utf8'));
     } else {

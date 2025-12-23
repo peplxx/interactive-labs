@@ -10,7 +10,7 @@ services:
       - PASSWORD=code-server
     volumes:
       - ./workspace:/home/ubuntu
-      - ./workshop:/app/slides
+      - ./workshop:/app/workshop
       - /var/run/docker.sock:/var/run/docker.sock
     networks:
       - lab_net

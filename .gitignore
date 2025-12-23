@@ -1,5 +1,8 @@
 node_modules/
-workspace/.*
 .github
 *.cast
+workspace/
+!workspace/entrypoint
+!workspace/forwarder
+!workspace/README.md
 !.keep

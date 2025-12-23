@@ -1,7 +1,6 @@
 #!/bin/bash
 
-# Takes text input from stdin and sends it to terminal dashboard
-# To later get copied to clipboard
+# Takes text input from stdin and sends it to clipboard
 
 text=$(cat | base64 -w0)
 
