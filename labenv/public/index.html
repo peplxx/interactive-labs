@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Workshop</title>
+    <link rel="stylesheet" href="/node_modules/@xterm/xterm/css/xterm.css" />
+    <link rel="stylesheet" href="lib/github-theme.css" />
+    <link rel="stylesheet" href="lib/github-syntax.css" />
+    <link rel="stylesheet" href="style.css">
+    <script src="/node_modules/split.js/dist/split.min.js"></script>
+    <script src="/node_modules/marked/marked.min.js"></script>
+    <script src="lib/highlight.min.js"></script>
+    <script src="/node_modules/socket.io/client-dist/socket.io.js"></script>
+    <script src="/node_modules/@xterm/xterm/lib/xterm.js"></script>
+    <script src="/node_modules/@xterm/addon-fit/lib/addon-fit.js"></script>
+</head>
+<body>
+    <div id="container">
+        <div id="renderer" class="split">
+            <div class="nav-bar">
+                <button id="prev-slide">Previous</button>
+                <span id="slide-info">Slide 0/0</span>
+                <button id="next-slide">Next</button>
+            </div>
+            <div id="slide-content" class="markdown-body" data-theme="light">
+                <!-- Slides will be rendered here -->
+                <h1>Loading slides...</h1>
+            </div>
+        </div>
+        <div id="playground" class="split">
+            <div class="tabs-container">
+                <div class="tabs" id="tabs-list">
+                    <!-- Tabs will be added here -->
+                </div>
+                <input type="text" id="url-input" placeholder="[ip:]port" />
+                <button id="add-tab" title="New Tab">+</button>
+            </div>
+            <div id="terminals-container">
+                <!-- Terminal containers will be added here -->
+            </div>
+        </div>
+    </div>
+    <script src="app.js"></script>
+</body>
+</html>

@@ -1,54 +1,43 @@
 # interactive-labs
 
-Transform your IT workshops into an interactive format using components from [educates.dev](https://educates.dev)
+Self-hosted interactive workshop environment. Enhance your existing workshops with a practice environment.
 
 ![screenshot](./screenshot.png)
 
 ## Demo
 
 1. Clone this repository
-2. Run sample workshop with `docker compose up`
-3. Access at <http://localhost:8080>
+2. Run sample workshop with `docker compose up -d`
+3. Access at <http://localhost:3000>
 
 ## Workshop Development in Docker
 
-1. Create a directory of `*.md` files for your workshop (refer to [syntax reference](https://docs.educates.dev/en/stable/workshop-content/workshop-instructions.html) and our [example](./example)).
+1. Create a directory of `*.md` files with workshop instructions (refer to the [example](./workshop)).
 
-2. Update [docker-compose.yaml](./docker-compose.yaml) to bind-mount the directory to the renderer
+1. Update [docker-compose.yaml](./docker-compose.yaml) to bind-mount directories and add  apps as needed.
 
     ```yaml
-    renderer:
-        ...
+    labenv:
         volumes:
-            - ./example:/opt/renderer/workshop/content
+            - ./workspace:/home/ubuntu
+            - ./workshop:/app/slides
+            - /var/run/docker.sock:/var/run/docker.sock
+    app1:
+        ...
+    app2:
+        ...
     ```
 
-3. Customize [nginx.conf](./nginx.conf) and [zellij.kdl](./zellij.kdl) if needed.
-
-4. Deploy the workshop. Changes to Markdown content are hot-reloaded.
+1. Deploy the workshop. Changes to Markdown content are hot-reloaded.
 
     ```bash
-    docker compose up
+    docker compose up -d
     ```
 
 ## Local Development
 
 ```bash
-# Copy markdown directory to renderer
-cp <workshop_dir> renderer/workshop/content
-
-# Build renderer for this workshop
-cd renderer
-npm i
-npm run compile
-npm run start
-
-# Build Terminal
-cd terminal
-npm i
-npm run compiler
-npm run start
-
-# Run Gateway
-docker run --network host -v $(pwd)/nginx.conf:/etc/nginx/nginx.conf nginx:alpine
+cd labenv
+npm install
+npm run dev
 ```

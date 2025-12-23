@@ -1,0 +1,7 @@
+# Workspace
+
+This directory is shared between the host and lab environment for convenience.
+
+- It's bind-mounted at `/home/ubuntu` as per `docker-compose.yaml`
+- The subdirectory `recordings` stores all asciinema-recorded sessions
+- The subdirectory `downloads` containes files downloaded from browser.

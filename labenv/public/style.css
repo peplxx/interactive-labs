@@ -1,0 +1,249 @@
+@font-face {
+    font-family: 'JetBrainsMono Nerd Font';
+    src: url('lib/JetBrainsMonoNerdFont-Regular.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}
+
+body, html {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    overflow: hidden;
+}
+
+#container {
+    display: flex;
+    height: 100vh;
+    width: 100vw;
+}
+
+.split {
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+}
+
+/* Split.js gutter */
+.gutter {
+    background-color: #eee;
+    background-repeat: no-repeat;
+    background-position: 50%;
+    cursor: col-resize;
+}
+
+.gutter:hover {
+    background-color: #ddd;
+}
+
+/* Renderer Styles */
+#renderer {
+    padding: 0;
+    background-color: #ffffff; /* GitHub Light bg */
+}
+
+.nav-bar {
+    padding: 10px;
+    background: #f6f8fa; /* GitHub Light header */
+    border-bottom: 1px solid #d0d7de;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    color: #24292f;
+}
+
+.nav-bar button {
+    background-color: #f6f8fa;
+    color: #24292f;
+    border: 1px solid #d0d7de;
+    padding: 5px 10px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-family: inherit;
+}
+
+.nav-bar button:hover {
+    background-color: #f3f4f6;
+    border-color: #8c959f;
+}
+
+#slide-content {
+    padding: 20px;
+    overflow-y: auto;
+    flex: 1;
+}
+
+/* Code Blocks */
+pre {
+    position: relative;
+    border-radius: 1px;
+    padding: 1px;
+}
+
+pre code {
+    font-family: 'Courier New', Courier, monospace;
+}
+
+.copy-btn {
+    position: absolute;
+    top: 5px;
+    right: 5px;
+    background: #f6f8fa;
+    color: #24292f;
+    border: 1px solid #d0d7de;
+    border-radius: 4px;
+    padding: 2px 6px;
+    font-size: 12px;
+    cursor: pointer;
+    opacity: 0;
+    transition: opacity 0.2s;
+}
+
+pre:hover .copy-btn {
+    opacity: 1;
+}
+
+.copy-btn:active {
+    background: #eff1f3;
+}
+
+/* Playground Styles */
+#playground {
+    background-color: #1e1e1e;
+    color: #fff;
+    display: flex;
+    flex-direction: column;
+}
+
+.tabs-container {
+    background: #252526;
+    display: flex;
+    height: 35px;
+    align-items: center;
+}
+
+.tabs {
+    display: flex;
+    flex: 1;
+    overflow-x: auto;
+}
+
+.tab {
+    padding: 0 10px 0 15px;
+    line-height: 35px;
+    cursor: pointer;
+    background: #2d2d2d;
+    color: #969696;
+    border-right: 1px solid #1e1e1e;
+    display: flex;
+    align-items: center;
+    min-width: 100px;
+    justify-content: space-between;
+    user-select: none;
+}
+
+.tab.active {
+    background: #1e1e1e;
+    color: #fff;
+}
+
+.tab .close-tab {
+    margin-left: 10px;
+    border-radius: 50%;
+    width: 16px;
+    height: 16px;
+    line-height: 16px;
+    text-align: center;
+    font-size: 12px;
+    color: #ccc;
+}
+
+.tab .close-tab:hover {
+    background-color: #444;
+    color: #fff;
+}
+
+#add-tab {
+    background: transparent;
+    border: none;
+    color: #ccc;
+    font-size: 20px;
+    width: 35px;
+    height: 35px;
+    cursor: pointer;
+}
+
+#add-tab:hover {
+    background-color: #333;
+    color: #fff;
+}
+
+#url-input {
+    background: #3c3c3c;
+    border: 1px solid #3c3c3c;
+    color: #ccc;
+    padding: 2px 4px 2px 8px;
+    margin-right: 5px;
+    margin-top: 2px;
+    margin-bottom: 2px;
+    border-radius: 3px;
+    outline: none;
+    width: 100px;
+    height: 24px;
+}
+
+#url-input:focus {
+    border-color: #007fd4;
+    color: #fff;
+}
+
+.xterm-screen {
+    margin: 1px;
+}
+
+#terminals-container {
+    flex: 1;
+    position: relative;
+}
+
+.terminal-wrapper {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    box-sizing: border-box;
+    visibility: hidden;
+    background-color: #1e1e1e;
+}
+
+.terminal-wrapper.active {
+    visibility: visible;
+    z-index: 1;
+}
+
+iframe {
+    width: 100%;
+    height: 100%;
+    border: none;
+    background: #fff;
+}
+
+@keyframes slideIn {
+    from { transform: translateX(100%); opacity: 0; }
+    to { transform: translateX(0); opacity: 1; }
+}
+
+/* Markdown Code Block Overrides */
+.markdown-body pre {
+    padding: 10px !important;
+    background-color: #f6f8fa !important;
+    border-radius: 6px !important;
+    border: 1px solid #000 !important;
+}
+
+.markdown-body pre code {
+    padding: 0 !important;
+    background-color: transparent !important;
+}
