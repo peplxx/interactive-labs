@@ -44,7 +44,7 @@ npm run dev
 
 ## Courses
 
-Checkout some courses utilizing the platform:
+Check out some courses utilizing the platform:
 
 - Fundamentals of Information Security: <https://github.com/Inno-CyberSec/FIS-F25>
 - Network and Cyber Security: <https://github.com/Inno-CyberSec/NCS-F25>
