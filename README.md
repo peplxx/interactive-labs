@@ -15,27 +15,27 @@ Complement your IT training workshops with a practice environment.
 
 - Container option
 
-```bash
-cd labenv
-docker build -t labenv .
-docker run -d -p3000:3000 labenv
-```
+    ```bash
+    cd labenv
+    docker build -t labenv .
+    docker run -d -p3000:3000 labenv
+    ```
 
 - Virtual Machine option
 
-```bash
-cd labenv
-packer init .
+    ```bash
+    cd labenv
+    packer init .
 
-# Adjust the commands to build for virtualbox/libvirt on amd64/arm64
-vagrant box add cloud-image/ubuntu-24.04 -a amd64 --box-version 20251213.0.0 --provider virtualbox
-packer build labenv.pkr.hcl
-vagrant box add --name labenv output/virtualbox/package.box
+    # Adjust the commands to build for virtualbox/libvirt on amd64/arm64
+    vagrant box add cloud-image/ubuntu-24.04 -a amd64 --box-version 20251213.0.0 --provider virtualbox
+    packer build labenv.pkr.hcl
+    vagrant box add --name labenv output/virtualbox/package.box
 
-# Test locally
-vagrant init labenv
-vagrant up
-```
+    # Test locally
+    vagrant init labenv
+    vagrant up
+    ```
 
 ## Local Development
 
