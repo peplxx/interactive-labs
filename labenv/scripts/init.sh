@@ -1,6 +1,8 @@
 #!/bin/bash
 set -e
 
+# VM initialization script used by packer
+
 # Disable interactive prompts
 export DEBIAN_FRONTEND=noninteractive
 

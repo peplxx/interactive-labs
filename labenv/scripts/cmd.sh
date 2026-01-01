@@ -2,6 +2,8 @@
 
 set -e
 
+# Cmd script of the container
+
 sudo chown -R 1000:1000 /home/ubuntu
 mkdir -p /home/ubuntu/.config/zellij
 cp /app/scripts/zellij.kdl /home/ubuntu/.config/zellij/config.kdl

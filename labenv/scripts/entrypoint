@@ -17,11 +17,14 @@ mkdir -p /home/ubuntu/recordings
 
 while true
     set DATE_TIME (env TZ=Europe/Moscow date '+%Y-%m-%d_%H-%M-%S')
-
     asciinema rec -i 1 "/home/ubuntu/recordings/$DATE_TIME.cast" -c zellij
 
-    read -P "Session finished. Press Enter to restart or type 'exit' to quit: " confirm
-    if test "$confirm" = "exit"
-        break
+    read -P "Session finished. Upload recording to asciinema? [y/N]: " confirm
+    if test "$confirm" = "y"
+        asciinema upload "/home/ubuntu/recordings/$DATE_TIME.cast"
+        read -P "Start a new session? [Y/n]: " restart
+        if test "$restart" = "n"
+            break
+        end
     end
 end

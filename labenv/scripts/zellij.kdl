@@ -122,4 +122,4 @@ show_startup_tips false
 // copy_on_select false
 
 // Override copy_command
-copy_command "/app/scripts/forwarder"
+copy_command "/app/scripts/forwarder.sh"
