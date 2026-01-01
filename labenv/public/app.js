@@ -103,7 +103,7 @@ let tabIdCounter = 1;
 function createTabElement(id, title, onClose) {
     const tab = document.createElement('div');
     tab.className = 'tab';
-    tab.innerHTML = `<span>${title}</span><span class="close-tab">x</span>`;
+    tab.innerHTML = `<span>${title}</span>${onClose ? '<span class="close-tab">x</span>' : ''}`;
     tab.onclick = (e) => {
         if (e.target.classList.contains('close-tab')) {
             onClose(id);
@@ -117,10 +117,7 @@ function createTabElement(id, title, onClose) {
 
 function createTerminal() {
     const id = 'term-' + tabIdCounter++;
-    
-    // Terminal 1 should just be called Terminal
-    const tabTitle = tabIdCounter === 2 ? 'Terminal' : `Terminal ${tabIdCounter - 1}`;
-    const tab = createTabElement(id, tabTitle, closeTab);
+    const tab = createTabElement(id, 'Terminal', null);
 
     // Create Terminal Container
     const wrapper = document.createElement('div');
@@ -181,13 +178,20 @@ function createTerminal() {
 }
 
 function createWebTab(url, title) {
+    // Parse tab name as name|url
+    const parts = url.split('|');
+    if (parts.length === 2) {
+        title = parts[0];
+        url = parts[1];
+    }
+
     if (!url.startsWith('http://') && !url.startsWith('https://')) {
         url = 'http://' + url;
 
         // if the url is just a port number, prepend localhost
         if (/^\d+$/.test(url.replace('http://', ''))) {
             url = 'http://localhost:' + url.replace('http://', '');
-        }
+        }        
     }
 
     const id = 'web-' + tabIdCounter++;
@@ -278,8 +282,6 @@ addTabBtn.addEventListener('click', () => {
     if (url) {
         createWebTab(url);
         urlInput.value = '';
-    } else {
-        createTerminal();
     }
 });
 
@@ -331,6 +333,7 @@ window.addEventListener('keydown', (e) => {
 
 // Create initial tabs
 const termId = createTerminal();
-createWebTab('http://localhost:5800', 'Browser');
-createWebTab('http://localhost:8080', 'IDE');
+
+createWebTab(`http://${window.location.hostname}:5800`, 'Browser');
+createWebTab(`http://${window.location.hostname}:8080`, 'IDE');
 setActiveTab(termId);

@@ -1,8 +1,8 @@
 node_modules/
-.github
-*.cast
 workspace/
-!workspace/entrypoint
-!workspace/forwarder
-!workspace/README.md
+output/
+.vagrant/
+.github/
+*.cast
 !.keep
+TODO.md

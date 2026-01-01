@@ -32,4 +32,4 @@ EXPOSE 3000 8080
 
 COPY . .
 
-CMD ["npm", "run", "start"]
+CMD ["/app/scripts/cmd.sh"]

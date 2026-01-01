@@ -138,7 +138,7 @@ pre:hover .copy-btn {
     border-right: 1px solid #1e1e1e;
     display: flex;
     align-items: center;
-    min-width: 100px;
+    min-width: 80px;
     justify-content: space-between;
     user-select: none;
 }
@@ -189,8 +189,14 @@ pre:hover .copy-btn {
     margin-bottom: 2px;
     border-radius: 3px;
     outline: none;
-    width: 100px;
+    width: 150px;
     height: 24px;
+    font-size: 16px;
+}
+
+#url-input::placeholder {
+    font-size: 16px;
+    letter-spacing: 1px;
 }
 
 #url-input:focus {

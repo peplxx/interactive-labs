@@ -5,7 +5,7 @@
   "main": "server.js",
   "scripts": {
     "dev": "nodemon server.js",
-    "start:code": "code-server --bind-addr 0.0.0.0:8080 /home/ubuntu",
+    "start:code": "code-server --bind-addr 0.0.0.0:8080 ~",
     "start:server": "node server.js",
     "start": "npm-run-all --parallel start:server start:code"
   },

@@ -4,35 +4,38 @@ Complement your IT training workshops with a practice environment.
 
 ![screenshot](./screenshot.png)
 
-## Demo
+## Quick Start
 
 1. Clone this repository
-2. Run sample workshop with `docker compose up -d`
+2. Run sample workshop with `docker compose up -d` or `vagrant up` (supports virtualbox/libvirt)
+    - Update [docker-compose.yaml](./docker-compose.yaml) or [Vagrantfile](./Vagrantfile) to customize the environemnt as needed
 3. Access at <http://localhost:3000>
 
-## Workshop Development in Docker
+## Building Locally
 
-1. Create a directory of `*.md` files with workshop instructions (refer to the [example](./workshop)).
+- Container option
 
-1. Update [docker-compose.yaml](./docker-compose.yaml) to bind-mount directories and add  apps as needed.
+```bash
+cd labenv
+docker build -t labenv .
+docker run -d -p3000:3000 labenv
+```
 
-    ```yaml
-    labenv:
-        volumes:
-            - ./workspace:/home/ubuntu
-            - ./workshop:/app/workshop
-            - /var/run/docker.sock:/var/run/docker.sock
-    app1:
-        ...
-    app2:
-        ...
-    ```
+- Virtual Machine option
 
-1. Deploy the workshop. Changes to Markdown content are hot-reloaded.
+```bash
+cd labenv
+packer init .
 
-    ```bash
-    docker compose up -d
-    ```
+# Adjust the commands to build for virtualbox/libvirt on amd64/arm64
+vagrant box add cloud-image/ubuntu-24.04 -a amd64 --box-version 20251213.0.0 --provider virtualbox
+packer build labenv.pkr.hcl
+vagrant box add --name labenv output/virtualbox/package.box
+
+# Test locally
+vagrant init labenv
+vagrant up
+```
 
 ## Local Development
 

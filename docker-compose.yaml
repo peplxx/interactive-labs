@@ -1,6 +1,6 @@
 services:
   labenv:
-    image: sh3b0/labenv:v1
+    image: sh3b0/labenv:v2
     container_name: labenv
     ports:
       - "127.0.0.1:3000:3000"
@@ -24,24 +24,6 @@ services:
       - ./workspace/downloads:/config/downloads
     networks:
       - lab_net
-    
-  # windows:
-  #   image: sh3b0/win:latest
-  #   container_name: windows
-  #   devices:
-  #     - /dev/kvm
-  #     - /dev/net/tun
-  #   cap_add:
-  #     - NET_ADMIN
-  #   ports:
-  #     - 8006:8006
-  #   volumes:
-  #     - ./workspace:/shared
-  #     - ./storage:/storage
-  #   networks:
-  #     - lab_net
-  #   restart: unless-stopped
-  #   stop_grace_period: 2m
 
 networks:
   lab_net:

@@ -7,7 +7,8 @@ const os = require('os');
 const fs = require('fs');
 const path = require('path');
 
-const entrypoint = fs.existsSync('/home/ubuntu/entrypoint') ? '/home/ubuntu/entrypoint' : os.userInfo().shell;
+const entrypointPath = path.join(__dirname, 'scripts', 'entrypoint');
+const entrypoint = fs.existsSync(entrypointPath) ? entrypointPath : os.userInfo().shell;
 
 // Serve static files
 app.use(express.static('public'));
