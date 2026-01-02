@@ -22,6 +22,30 @@ const slideInfo = document.getElementById('slide-info');
 const prevBtn = document.getElementById('prev-slide');
 const nextBtn = document.getElementById('next-slide');
 
+// View Switching Logic
+const viewInstructionsBtn = document.getElementById('view-instructions');
+const viewReportingBtn = document.getElementById('view-reporting');
+const instructionsView = document.getElementById('instructions-view');
+const reportingView = document.getElementById('reporting-view');
+const reportingIframe = document.getElementById('reporting-iframe');
+
+// Set reporting URL
+reportingIframe.src = `http://${window.location.hostname}:5801`;
+
+viewInstructionsBtn.addEventListener('click', () => {
+    viewInstructionsBtn.classList.add('active');
+    viewReportingBtn.classList.remove('active');
+    instructionsView.style.display = 'flex';
+    reportingView.style.display = 'none';
+});
+
+viewReportingBtn.addEventListener('click', () => {
+    viewReportingBtn.classList.add('active');
+    viewInstructionsBtn.classList.remove('active');
+    reportingView.style.display = 'block';
+    instructionsView.style.display = 'none';
+});
+
 // Configure marked with highlight.js
 marked.use({
     renderer: {
