@@ -6,10 +6,13 @@ Complement your IT training workshops with a practice environment.
 
 ## Quick Start
 
-1. Clone this repository
-2. Run sample workshop with `docker compose up -d` or `vagrant up` (supports virtualbox/libvirt)
-    - Update [docker-compose.yaml](./docker-compose.yaml) or [Vagrantfile](./Vagrantfile) to customize the environemnt as needed
-3. Access at <http://localhost:3000>
+1. Start from a given [docker-compose.yaml](./docker-compose.yaml) or [Vagrantfile](./Vagrantfile)
+
+1. Prepare a `workshop` directory with your content (refer to our [example](./workshop))
+
+1. Run the lab with `docker compose up -d` or `vagrant up` (supports virtualbox/libvirt)
+
+1. Access at <http://localhost:3000>
 
 ## Building Locally
 
