@@ -2,11 +2,8 @@ Vagrant.configure("2") do |config|
   config.vm.box = "sh3b0/labenv"
   config.vm.box_version = "1.0.0"
 
-  # Map port 8080 on the host to port 8080 on the guest
-  config.vm.network "forwarded_port", guest: 8080, host: 8080
-  config.vm.network "forwarded_port", guest: 3000, host: 3000
-  config.vm.network "forwarded_port", guest: 5800, host: 5800
-  config.vm.network "forwarded_port", guest: 5801, host: 5801
+  # Attach VM to the host network (bridged)
+  config.vm.network "public_network"
 
   # Disable automatic SSH key insertion to use the default Vagrant key
   config.ssh.insert_key = false
