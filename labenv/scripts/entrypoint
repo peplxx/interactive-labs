@@ -2,29 +2,24 @@
 # shellcheck disable=SC1071
 
 # Startup script executes once as the web terminal is loaded
-
 set -Ux fish_greeting ""
 
-# Run these commands only if in docker container
+# Run if in docker container (with docker socket mapping)
 if test -f /.dockerenv
     alias -s docker "sudo docker"
-    set -Ux HOST_PATH "$(docker inspect labenv | jq -r '.[0].Mounts[] | select(.Destination=="/ubuntu") | .Source')"
+    set -Ux HOST_WORKDIR "$(docker inspect labenv | jq -r '.[0].Mounts[] | select(.Destination=="/home/ubuntu") | .Source')"
     set -Ux HOST_USERNAME "$(docker system info --format '{{.Name}}')"
-    set -Ux NETWORK_GATEWAY "$(docker inspect lab_net | jq -r '.[0].IPAM.Config.[0].Gateway')"
-end
+    set -Ux NETWORK_GATEWAY "$(docker inspect lab_net | jq -r '.[0].IPAM.Config[0].Gateway')"
+    set -Ux OS_ID $(grep '^ID=' /etc/os-release | cut -d= -f2)
 
-mkdir -p recordings
-
-while true
-    set DATE_TIME (env TZ=Europe/Moscow date '+%Y-%m-%d_%H-%M-%S')
-    asciinema rec -i 1 "recordings/$DATE_TIME.cast" -c zellij
-
-    read -P "Session finished. Upload recording to asciinema? [y/N]: " confirm
-    if test "$confirm" = "y"
-        asciinema upload "recordings/$DATE_TIME.cast"
-        read -P "Start a new session? [Y/n]: " restart
-        if test "$restart" = "n"
-            break
-        end
+    # If in debian container, SSH to VM host. Otherwise run directly inside container
+    if test "$OS_ID" = "debian"
+        sshpass -p 'vagrant' scp -p -o StrictHostKeyChecking=no /app/scripts/record.fish vagrant@"$NETWORK_GATEWAY":/tmp/record.fish
+        exec sshpass -p 'vagrant' ssh -o StrictHostKeyChecking=no -t vagrant@"$NETWORK_GATEWAY" "exec fish /tmp/record.fish"
+    else
+        exec fish /app/scripts/record.fish
     end
 end
+
+# Local development environment
+exec fish 

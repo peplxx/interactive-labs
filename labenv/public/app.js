@@ -212,9 +212,9 @@ function createWebTab(url, title) {
     if (!url.startsWith('http://') && !url.startsWith('https://')) {
         url = 'http://' + url;
 
-        // if the url is just a port number, prepend localhost
+        // if the url is just a port number, prepend window.location.hostname
         if (/^\d+$/.test(url.replace('http://', ''))) {
-            url = 'http://localhost:' + url.replace('http://', '');
+            url = 'http://' + window.location.hostname + ':' + url.replace('http://', '');
         }        
     }
 

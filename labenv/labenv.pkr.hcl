@@ -30,7 +30,7 @@ source "vagrant" "labenv-libvirt" {
 build {
   sources = [
     "source.vagrant.labenv-virtualbox",
-    "source.vagrant.labenv-libvirt",
+    # "source.vagrant.labenv-libvirt",
   ]
   
   provisioner "shell" {
@@ -38,7 +38,7 @@ build {
     execute_command = "echo 'vagrant' | {{ .Vars }} sudo -S -E bash '{{ .Path }}'"
   }
 
-  # Uncomment the following block to enable Vagrant Cloud upload
+  # Uncomment the following block to enable Vagrant Cloud upload (set HCP_CLIENT_ID and HCP_CLIENT_SECRET first)
   # post-processor "vagrant-registry" {
   #   box_tag             = "sh3b0/labenv"
   #   version             = "1.0.0"

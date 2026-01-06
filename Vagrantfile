@@ -10,9 +10,8 @@ Vagrant.configure("2") do |config|
   
   # Synced folders
   config.vm.synced_folder ".", "/vagrant", disabled: true
-  config.vm.synced_folder "./workspace", "/home/vagrant/", create: true
-  config.vm.synced_folder "./labenv", "/app", create: true
-  config.vm.synced_folder "./workshop", "/app/labenv/workshop"
+  config.vm.synced_folder "./workspace.vm", "/home/vagrant", create: true
+  config.vm.synced_folder "./workshop", "/app/workshop", create: true
 
   # Virtualbox specific configuration
   config.vm.provider "virtualbox" do |vb|
@@ -28,17 +27,14 @@ Vagrant.configure("2") do |config|
     lv.cpus = 4
   end
 
-  # Provisioning script
+  # Copy docker-compose file to the VM
+  config.vm.provision "file", source: "docker-compose-vm.yaml", destination: "/tmp/docker-compose.yaml"
+
+  # Run provisioning script
   config.vm.provision "shell", inline: <<-SHELL
-  sudo chown -R vagrant:vagrant /app/labenv
-  sudo systemctl start labenv
-  sudo systemctl enable labenv
-  
-  mkdir -p /home/vagrant/.config/zellij
-  cp /app/scripts/zellij.kdl /home/vagrant/.config/zellij/config.kdl
-
-  echo "Machine IP Addresses: "
-  hostname -I
-
+    cp /tmp/docker-compose.yaml /app/docker-compose.yaml
+    cd /app && docker compose pull && docker compose up -d
+    PASSWORD=code-server bash -c 'code-server --bind-addr 0.0.0.0:8080 ~' &
+    echo "Machine IP Addresses: " && hostname -I
   SHELL
 end

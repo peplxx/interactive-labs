@@ -1,10 +1,4 @@
-<!--
-
-This file is automatically copied on labenv startup to workspace/report/README.md
- where it'll be opened by default as typora starts.
-
--->
-
+<!-- workshop/template.markdown -->
 # Documenting Your Work
 
 > Author: Name Surname (<n.surname@example.com>)
