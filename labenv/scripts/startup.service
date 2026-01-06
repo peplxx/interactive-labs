@@ -1,0 +1,17 @@
+[Unit]
+Description=Startup Script
+After=multi-user.target network-online.target
+Wants=network-online.target
+ConditionPathExists=/app/scripts/cmd.sh
+
+[Service]
+Type=oneshot
+ExecStart=/app/scripts/cmd.sh
+RemainAfterExit=yes
+StandardOutput=journal
+WorkingDirectory=/app
+User=ubuntu
+Group=ubuntu
+
+[Install]
+WantedBy=multi-user.target

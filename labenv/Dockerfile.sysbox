@@ -1,0 +1,63 @@
+# https://github.com/nestybox/dockerfiles/blob/master/ubuntu-noble-systemd/Dockerfile
+
+FROM ubuntu:24.04
+
+ENV DEBIAN_FRONTEND=noninteractive
+
+# Unminimize the base image
+RUN apt-get update && yes | unminimize
+
+# Install essential (and system-related) packages
+RUN apt-get install -y sudo man-db vim nano curl wget iputils-ping fish asciinema \
+    netcat-openbsd telnet file iproute2 net-tools tcpdump jq unzip tree procps docker.io docker-buildx \
+    nodejs npm systemd systemd-sysv libsystemd0 ca-certificates dbus iptables kmod locales udev \
+    && echo "ReadKMsg=no" >> /etc/systemd/journald.conf \
+    && apt-get clean -y \
+    && rm -rf /var/lib/apt/lists/* /var/cache/debconf/* /var/log/* /tmp/* /var/tmp/*
+
+# Disable systemd services/units that are unnecessary within a container.
+RUN systemctl mask systemd-udevd.service \
+                   systemd-udevd-kernel.socket \
+                   systemd-udevd-control.socket \
+                   systemd-modules-load.service \
+                   sys-kernel-debug.mount \
+                   sys-kernel-tracing.mount \
+                   sys-kernel-config.mount \
+                   e2scrub_reap.service \
+                   e2scrub_all.timer
+
+# Install docker, code-server, and zellij. Then prepare user account
+WORKDIR /tmp
+RUN mkdir -p /usr/local/lib/docker/cli-plugins \
+    && wget https://github.com/docker/compose/releases/download/v5.0.1/docker-compose-linux-x86_64 \
+    && chmod +x docker-compose-linux-x86_64 && mv docker-compose-linux-x86_64 /usr/local/lib/docker/cli-plugins/docker-compose \
+    && curl -fsSL https://raw.githubusercontent.com/cdr/code-server/main/install.sh | sh \
+    && wget https://github.com/zellij-org/zellij/releases/download/v0.43.1/zellij-x86_64-unknown-linux-musl.tar.gz \
+    && tar -xzf zellij-x86_64-unknown-linux-musl.tar.gz && mv zellij /usr/local/bin/ \
+    && echo "ubuntu:ubuntu" | chpasswd \
+    && usermod -aG sudo ubuntu \
+    && usermod -aG docker ubuntu \
+    && echo "ubuntu ALL=(ALL) NOPASSWD:ALL" >> /etc/sudoers \
+    && chsh -s /usr/bin/fish ubuntu
+
+# Set systemd as entrypoint
+ENTRYPOINT [ "/sbin/init", "--log-level=err" ]
+
+# Make use of stopsignal (instead of sigterm) to stop systemd containers.
+STOPSIGNAL SIGRTMIN+3
+
+# Application setup
+WORKDIR /app
+COPY package*.json .
+RUN npm ci
+EXPOSE 3000 8080
+COPY . .
+
+# Setup autologin and startup service
+RUN mkdir -p /etc/systemd/system/console-getty.service.d/ \
+    && mv /app/scripts/autologin.conf /etc/systemd/system/console-getty.service.d/override.conf \
+    && mv /app/scripts/startup.service /etc/systemd/system/startup.service \
+    && systemctl enable startup.service
+
+# Temporary fix. See https://github.com/nestybox/sysbox/issues/973
+RUN apt-get update && apt-get install -y --allow-downgrades runc=1.1.12-0ubuntu3

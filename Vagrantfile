@@ -34,7 +34,7 @@ Vagrant.configure("2") do |config|
   config.vm.provision "shell", inline: <<-SHELL
     cp /tmp/docker-compose.yaml /app/docker-compose.yaml
     cd /app && docker compose pull && docker compose up -d
-    PASSWORD=code-server bash -c 'code-server --bind-addr 0.0.0.0:8080 ~' &
+    bash -c 'code-server --bind-addr 0.0.0.0:8080 ~' &
     echo "Machine IP Addresses: " && hostname -I
   SHELL
 end

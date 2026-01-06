@@ -1,16 +1,14 @@
 services:
   labenv:
-    image: sh3b0/labenv:stable
+    image: sh3b0/labenv:sysbox
     container_name: labenv
+    runtime: sysbox-runc
     ports:
       - "127.0.0.1:3000:3000"
       - "127.0.0.1:8080:8080"
-    environment:
-      - SHELL=/usr/bin/fish
     volumes:
       - ./workspace:/home/ubuntu
       - ./workshop:/app/workshop
-      - /var/run/docker.sock:/var/run/docker.sock
     networks:
       - lab_net
 

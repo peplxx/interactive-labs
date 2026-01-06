@@ -4,8 +4,15 @@
 # Startup script executes once as the web terminal is loaded
 set -Ux fish_greeting ""
 
-# Run if in docker container (with docker socket mapping)
+# Run if in docker container
 if test -f /.dockerenv
+
+    # if in sysbox container, run recording script directly
+    if type systemctl 2>/dev/null
+        exec fish /app/scripts/record.fish
+    end
+
+    # Otherwise, assume docker socket is mapped
     alias -s docker "sudo docker"
     set -Ux HOST_WORKDIR "$(docker inspect labenv | jq -r '.[0].Mounts[] | select(.Destination=="/home/ubuntu") | .Source')"
     set -Ux HOST_USERNAME "$(docker system info --format '{{.Name}}')"

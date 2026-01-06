@@ -14,8 +14,5 @@ while true
         asciinema upload "recordings/$DATE_TIME.cast"
     end
 
-    read -P 'Start a new session? [Y/n]: ' restart
-    if test "$restart" = "n"
-        break
-    end
+    read -P 'Press Enter to start a new session: ' restart
 end
