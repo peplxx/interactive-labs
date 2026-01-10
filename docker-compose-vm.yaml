@@ -19,7 +19,7 @@ services:
     ports:
       - "5800:5800"
     volumes:
-      - ./workspace/downloads:/config/downloads
+      - /home/vagrant/downloads:/config/downloads
     networks:
       - lab_net
     
@@ -29,8 +29,8 @@ services:
     ports:
       - "5801:5800"
     volumes:
-      - ./workspace/.config/typora:/config/xdg/config/Typora
-      - ./workspace/report:/home/ubuntu/docs
+      - /home/vagrant/.config/typora:/config/xdg/config/Typora
+      - /home/vagrant/docs:/home/ubuntu/docs
     networks:
       - lab_net
 

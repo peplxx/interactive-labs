@@ -4,6 +4,10 @@ packer {
       version = ">= 1.1.0"
       source  = "github.com/hashicorp/vagrant"
     }
+    # utm = {
+    #   version = ">=v0.0.2"
+    #   source  = "github.com/naveenrajm7/utm"
+    # }
   }
 }
 
@@ -27,10 +31,19 @@ source "vagrant" "labenv-libvirt" {
   box_name     = "labenv"
 }
 
+# source "utm" "labenv-utm" {
+#   communicator = "ssh"
+#   source_path = "utm/noble"
+#   box_version = "0.0.0"
+#   output_directory = "output/utm"
+#   vm_name = "labenv"
+# }
+
 build {
   sources = [
-    "source.vagrant.labenv-virtualbox",
-    # "source.vagrant.labenv-libvirt",
+    # "source.vagrant.labenv-virtualbox",
+    "source.vagrant.labenv-libvirt",
+    # "source.utm.labenv-utm",
   ]
   
   provisioner "shell" {
@@ -38,7 +51,7 @@ build {
     execute_command = "echo 'vagrant' | {{ .Vars }} sudo -S -E bash '{{ .Path }}'"
   }
 
-  # Uncomment the following block to enable Vagrant Cloud upload (set HCP_CLIENT_ID and HCP_CLIENT_SECRET first)
+  # Uncomment the following blocks to enable Vagrant Cloud upload (set HCP_CLIENT_ID and HCP_CLIENT_SECRET first)
   # post-processor "vagrant-registry" {
   #   box_tag             = "sh3b0/labenv"
   #   version             = "1.0.0"

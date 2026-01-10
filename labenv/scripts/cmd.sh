@@ -11,6 +11,7 @@ cp /app/scripts/entrypoint /home/ubuntu/entrypoint
 
 # If there is a template.markdown, copy it to the location where typora would catch it.
 cp workshop/template.markdown /home/ubuntu/docs/README.md || true
+sudo chown -R 1000:1000 /home/ubuntu/docs
 
 # shellcheck source=/dev/null
 source "/etc/os-release"

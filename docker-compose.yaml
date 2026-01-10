@@ -31,7 +31,7 @@ services:
       - "127.0.0.1:5801:5800"
     volumes:
       - ./workspace/.config/typora:/config/xdg/config/Typora
-      - ./workspace/report:/home/ubuntu/docs
+      - ./workspace/docs:/home/ubuntu/docs
     networks:
       - lab_net
 

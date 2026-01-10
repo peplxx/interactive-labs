@@ -23,10 +23,6 @@ curl -fsSL https://raw.githubusercontent.com/cdr/code-server/main/install.sh | s
 wget https://github.com/zellij-org/zellij/releases/download/v0.43.1/zellij-x86_64-unknown-linux-musl.tar.gz
 tar -xzf zellij-x86_64-unknown-linux-musl.tar.gz && mv zellij /usr/local/bin/
 
-docker pull sh3b0/labenv:vm
-docker pull sh3b0/typora:1.12.4
-docker pull jlesage/firefox:v25.12.5
-
 # Set fish as default shell for vagrant
 sudo chsh -s /usr/bin/fish vagrant
 

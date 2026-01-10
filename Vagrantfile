@@ -1,9 +1,20 @@
-Vagrant.configure("2") do |config|
-  config.vm.box = "sh3b0/labenv"
-  config.vm.box_version = "1.0.0"
+# https://github.com/alchemy-solutions/vagrant-cloud-images
 
-  # Attach VM to the host network (bridged)
-  config.vm.network "public_network"
+Vagrant.configure("2") do |config|
+  config.vm.box = "labenv"
+
+  # config.vm.box_url = "https://github.com/Sh3b0/interactive-labs/releases/download/boxes/labenv-virtualbox-amd64.box"
+  # config.vm.box_url = "https://github.com/Sh3b0/interactive-labs/releases/download/boxes/labenv-libvirt-amd64.box"
+
+  # config.vm.box_version = "1.0.0"
+  
+  config.vm.network "private_network", type: "dhcp"
+
+  # Trigger to prepare Docker images on the host before bringing up the VM
+  config.trigger.before :up do |trigger|
+    trigger.info = "Caching Docker images via local registry..."
+    trigger.run = {path: "labenv/scripts/trigger.sh"}
+  end
 
   # Disable automatic SSH key insertion to use the default Vagrant key
   config.ssh.insert_key = false
@@ -12,7 +23,7 @@ Vagrant.configure("2") do |config|
   config.vm.synced_folder ".", "/vagrant", disabled: true
   config.vm.synced_folder "./workspace.vm", "/home/vagrant", create: true
   config.vm.synced_folder "./workshop", "/app/workshop", create: true
-
+  
   # Virtualbox specific configuration
   config.vm.provider "virtualbox" do |vb|
     vb.name = "labenv-vm"
@@ -22,7 +33,6 @@ Vagrant.configure("2") do |config|
 
   # Libvirt specific configuration
   config.vm.provider "libvirt" do |lv|
-    lv.name = "labenv-vm"
     lv.memory = 4096
     lv.cpus = 4
   end
@@ -31,10 +41,5 @@ Vagrant.configure("2") do |config|
   config.vm.provision "file", source: "docker-compose-vm.yaml", destination: "/tmp/docker-compose.yaml"
 
   # Run provisioning script
-  config.vm.provision "shell", inline: <<-SHELL
-    cp /tmp/docker-compose.yaml /app/docker-compose.yaml
-    cd /app && docker compose pull && docker compose up -d
-    bash -c 'code-server --bind-addr 0.0.0.0:8080 ~' &
-    echo "Machine IP Addresses: " && hostname -I
-  SHELL
+  config.vm.provision "shell", path: "labenv/scripts/provision.sh"
 end
