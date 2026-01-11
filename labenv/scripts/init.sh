@@ -16,12 +16,34 @@ sudo apt-get install -y git man-db vim nano curl wget iputils-ping fish asciinem
 sudo usermod -aG docker vagrant
 
 # Install compose, code-server, and zellij
+ARCH=$(uname -m)
+case "$ARCH" in
+    x86_64)
+        ARCH="x86_64"
+        ARCH_AKA="amd64"
+        ;;
+    aarch64|arm64)
+        ARCH="aarch64"
+        ARCH_AKA="arm64"
+        ;;
+esac
+
+# Docker Compose installation
 mkdir -p /usr/local/lib/docker/cli-plugins
-wget https://github.com/docker/compose/releases/download/v5.0.1/docker-compose-linux-x86_64
-chmod +x docker-compose-linux-x86_64 && mv docker-compose-linux-x86_64 /usr/local/lib/docker/cli-plugins/docker-compose
-curl -fsSL https://raw.githubusercontent.com/cdr/code-server/main/install.sh | sh
-wget https://github.com/zellij-org/zellij/releases/download/v0.43.1/zellij-x86_64-unknown-linux-musl.tar.gz
-tar -xzf zellij-x86_64-unknown-linux-musl.tar.gz && mv zellij /usr/local/bin/
+wget "https://github.com/docker/compose/releases/download/v5.0.1/docker-compose-linux-${ARCH}"
+chmod +x "docker-compose-linux-${ARCH}"
+mv "docker-compose-linux-${ARCH}" /usr/local/lib/docker/cli-plugins/docker-compose
+
+# Code Server installation
+wget "https://github.com/coder/code-server/releases/download/v4.107.1/code-server_4.107.1_${ARCH_AKA}.deb"
+sudo apt-get install -y "./code-server_4.107.1_${ARCH_AKA}.deb"
+rm "code-server_4.107.1_${ARCH_AKA}.deb"
+
+# Zellij installation
+wget "https://github.com/zellij-org/zellij/releases/download/v0.43.1/zellij-${ARCH}-unknown-linux-musl.tar.gz"
+tar -xzf "zellij-${ARCH}-unknown-linux-musl.tar.gz"
+mv zellij /usr/local/bin/
+rm "zellij-${ARCH}-unknown-linux-musl.tar.gz"
 
 # Set fish as default shell for vagrant
 sudo chsh -s /usr/bin/fish vagrant
