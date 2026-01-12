@@ -4,41 +4,42 @@ Complement your IT training workshops with a practice environment.
 
 ![screenshot](./screenshot.png)
 
-## Quick Start
+## Quick Start (Docker)
 
-1. Start from a given [docker-compose.yaml](./docker-compose.yaml) or [Vagrantfile](./Vagrantfile)
+1. Start from a given [docker-compose.yaml](./docker-compose.yaml)
 
 1. Prepare a `workshop` directory with your content (refer to our [example](./workshop))
 
-1. Run the lab with `docker compose up -d` or `vagrant up` (supports virtualbox/libvirt)
+1. Run the lab with `docker compose up -d`
 
 1. Access at <http://localhost:3000>
 
-## Building Locally
+## Quick Start (Vagrant)
 
-- Container option
+1. Setup the Virtual Machine Manager (VMM) for your platform
+
+   - Windows: [Hyper-V Manager](https://learn.microsoft.com/en-us/windows-server/virtualization/hyper-v/get-started/install-hyper-v)
+   - Linux: [QEMU/KVM + Libvirt + virt-manager](https://christitus.com/vm-setup-in-linux/)
+   - MacOS: [UTM](https://mac.getutm.app/) (with [utmctl](https://docs.getutm.app/scripting/scripting/#command-line-interface))
+   - Hosted (Type-2) Hypervisor: [VirtualBox](https://www.virtualbox.org/wiki/Downloads)
+
+2. Download the corrsponding box from our [Release](https://github.com/Sh3b0/interactive-labs/releases/tag/boxes) page and import it into vagrant
+
+   ```bash
+   vagrant box add --name labenv <path_to_box_file>
+   ```
+
+3. Install a plugin to integrate with the VMM (no plugins needed for VirtualBox/Hyper-V)
 
     ```bash
-    cd labenv
-    docker build -t labenv .
-    docker run -d -p3000:3000 labenv
+    vagrant plugin install <vagrant-libvirt|vagrant_utm>
     ```
 
-- Virtual Machine option
+4. Run the enivonment and access at `http://<VM-IP>:3000`
 
-    ```bash
-    cd labenv
-    packer init .
-
-    # Adjust the commands to build for virtualbox/libvirt on amd64/arm64
-    vagrant box add cloud-image/ubuntu-24.04 -a amd64 --box-version 20251213.0.0 --provider virtualbox
-    packer build labenv.pkr.hcl
-    vagrant box add --name labenv output/virtualbox/package.box
-
-    # Test locally
-    vagrant init labenv
-    vagrant up
-    ```
+   ```bash
+   vagrant up --provider <hyperv|libvirt|utm|virtualbox>
+   ```
 
 ## Local Development
 
@@ -48,10 +49,41 @@ npm install
 npm run dev
 ```
 
+## Local Building
+
+- Container Environment
+
+  ```bash
+  cd labenv
+  docker build -t labenv .
+  docker run -d -p3000:3000 labenv
+  ```
+
+- Virtual Machine Environment
+
+  0. Ensure your have Packer, Vagrant, and the required VMM installed
+
+  1. Download Ubuntu 24.04 base box ([Hyper-V](https://portal.cloud.hashicorp.com/vagrant/discover/sture/ubuntu2404), [Libvirt/VirtualBox](https://portal.cloud.hashicorp.com/vagrant/discover/cloud-images/ubuntu-24.04), [UTM](https://portal.cloud.hashicorp.com/vagrant/discover/utm/noble))
+
+  2. Import it into Vagrant
+
+     ```bash
+     vagrant box add --name <name> <path_to_box_file>
+     ```
+
+  3. Run the build
+
+     ```bash
+     cd labenv
+     packer init .
+     packer build labenv.pkr.hcl
+     ```
+
+  4. If successful, release artifact should be available at `labenv/output/<provider>/package.box`
+
 ## Courses
 
 Check out some courses utilizing the platform:
 
 - Fundamentals of Information Security: <https://github.com/Inno-CyberSec/FIS-F25>
 - Network and Cyber Security: <https://github.com/Inno-CyberSec/NCS-F25>
-- Secure System Development: <https://github.com/Inno-CyberSec/SSD-S26>

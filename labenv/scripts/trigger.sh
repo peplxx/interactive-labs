@@ -2,7 +2,7 @@
 
 set -e
 
-docker run -d -p 5000:5000 --restart=always --name vagrant-registry registry:2 2>/dev/null || true
+docker run -d -p 5000:5000 --restart=always --name registry registry:2 2>/dev/null || true
 
 IMAGES=$(docker compose -f docker-compose-vm.yaml config --images)
 

@@ -10,7 +10,7 @@ export DEBIAN_FRONTEND=noninteractive
 # Update and install packages
 sudo apt-get update
 sudo apt-get install -y git man-db vim nano curl wget iputils-ping fish asciinema \
-    netcat-openbsd telnet file iproute2 net-tools tcpdump jq unzip tree docker.io docker-buildx
+    netcat-openbsd telnet file iproute2 net-tools tcpdump jq unzip tree docker.io
 
 # For Docker usage without sudo 
 sudo usermod -aG docker vagrant
