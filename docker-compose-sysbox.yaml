@@ -1,8 +1,11 @@
+# Lab Environment in a System (VM-Like) Container - with systemd and Docker available inside
+#  Intended for Linux or Windows (WSL2) hosts with docker-ce/docker.io installation (not Docker Desktop).
+
 services:
   labenv:
     image: sh3b0/labenv:sysbox
     container_name: labenv
-    runtime: sysbox-runc
+    runtime: sysbox-runc # https://github.com/nestybox/sysbox/blob/master/docs/user-guide/install-package.md 
     ports:
       - "127.0.0.1:3000:3000"
       - "127.0.0.1:8080:8080"
