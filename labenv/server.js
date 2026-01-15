@@ -41,7 +41,7 @@ app.get('/api/slides', (req, res) => {
     if (!fs.existsSync(slidesDir)) {
         return res.json([]);
     }
-    const files = fs.readdirSync(slidesDir).filter(f => f.endsWith('.md'));
+    const files = fs.readdirSync(slidesDir).filter(f => f.endsWith('.md') && f !== "README.md");
     res.json(files);
 });
 
@@ -52,6 +52,27 @@ app.get('/api/slides/:filename', (req, res) => {
         res.send(fs.readFileSync(filepath, 'utf8'));
     } else {
         res.status(404).send('Not found');
+    }
+});
+
+// API to save markdown content
+app.post('/api/save', (req, res) => {
+    const { content, filename } = req.body;
+    // Default to README.md if no filename provided
+    const targetFile = filename || 'README.md';
+    
+    // Basic path traversal prevention
+    if (targetFile.includes('..') || targetFile.includes('/')) {
+        return res.status(400).json({ error: 'Invalid filename' });
+    }
+
+    const filepath = path.join(__dirname, 'workshop', targetFile);
+    try {
+        fs.writeFileSync(filepath, content, 'utf8');
+        res.json({ success: true });
+    } catch (err) {
+        console.error('Error saving file:', err);
+        res.status(500).json({ error: 'Failed to save file' });
     }
 });
 

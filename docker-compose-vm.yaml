@@ -22,17 +22,6 @@ services:
       - /home/vagrant/downloads:/config/downloads
     networks:
       - lab_net
-    
-  typora:
-    image: sh3b0/typora:1.12.4
-    container_name: typora
-    ports:
-      - "5801:5800"
-    volumes:
-      - /home/vagrant/.config/typora:/config/xdg/config/Typora
-      - /home/vagrant/docs:/home/ubuntu/docs
-    networks:
-      - lab_net
 
 networks:
   lab_net:

@@ -291,3 +291,46 @@ iframe {
     padding: 0 !important;
     background-color: transparent !important;
 }
+
+.editor-container {
+    height: 100%;
+    overflow-y: auto;
+    box-sizing: border-box;
+}
+
+#editor {
+    min-height: 100%;
+    width: 100%;
+}
+
+@media print {
+    .nav-bar, 
+    .renderer-tabs,
+    #playground, 
+    .gutter, 
+    #prev-slide, 
+    #next-slide, 
+    #slide-info,
+    #instructions-view {
+        display: none !important;
+    }
+
+    body, html, .split, #renderer, #reporting-view {
+        height: auto !important;
+        width: 100% !important;
+        overflow: visible !important;
+        display: block !important;
+        position: static !important;
+        float: none !important;
+    }
+
+    .editor-container {
+        height: auto !important;
+        overflow: visible !important;
+    }
+
+    #editor {
+        min-height: 0 !important;
+        height: auto !important;
+    }
+}

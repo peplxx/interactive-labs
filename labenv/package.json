@@ -5,11 +5,13 @@
   "main": "server.js",
   "scripts": {
     "dev": "nodemon server.js",
-    "start:code": "code-server --bind-addr 0.0.0.0:8080 ~",
+    "start:code": "code-server --bind-addr=0.0.0.0:8080 --auth none --disable-telemetry --disable-update-check --disable-workspace-trust --disable-getting-started-override ~",
     "start:server": "node server.js",
-    "start": "npm-run-all --parallel start:server start:code"
+    "start": "npm-run-all --parallel start:server start:code",
+    "build": "vite build"
   },
   "dependencies": {
+    "@muyajs/core": "^0.0.39",
     "@xterm/addon-fit": "^0.11.0",
     "@xterm/xterm": "^6.0.0",
     "express": "^4.18.2",
@@ -21,6 +23,7 @@
     "split.js": "^1.6.5"
   },
   "devDependencies": {
-    "nodemon": "^3.1.11"
+    "nodemon": "^3.1.11",
+    "vite": "^7.3.1"
   }
 }

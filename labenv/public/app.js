@@ -13,7 +13,7 @@ Split(['#renderer', '#playground'], {
     }
 });
 
-// --- Renderer Logic ---
+// Renderer Logic
 let slides = [];
 let currentSlideIndex = 0;
 
@@ -27,10 +27,6 @@ const viewInstructionsBtn = document.getElementById('view-instructions');
 const viewReportingBtn = document.getElementById('view-reporting');
 const instructionsView = document.getElementById('instructions-view');
 const reportingView = document.getElementById('reporting-view');
-const reportingIframe = document.getElementById('reporting-iframe');
-
-// Set reporting URL
-reportingIframe.src = `http://${window.location.hostname}:5801`;
 
 viewInstructionsBtn.addEventListener('click', () => {
     viewInstructionsBtn.classList.add('active');

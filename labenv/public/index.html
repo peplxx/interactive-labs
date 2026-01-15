@@ -15,6 +15,8 @@
     <script src="/node_modules/socket.io/client-dist/socket.io.js"></script>
     <script src="/node_modules/@xterm/xterm/lib/xterm.js"></script>
     <script src="/node_modules/@xterm/addon-fit/lib/addon-fit.js"></script>
+    <link rel="stylesheet" crossorigin href="/assets/editor.css">
+    <script type="module" crossorigin src="/assets/editor.mjs"></script>
 </head>
 <body>
     <div id="container">
@@ -30,8 +32,10 @@
                     <h1>Loading slides...</h1>
                 </div>
             </div>
-            <div id="reporting-view" style="display: none;">
-                <iframe id="reporting-iframe" style="width: 100%; height: 100%; border: none;"></iframe>
+            <div id="reporting-view" style="display: none; height: 100%; width: 100%;">
+                <div class="editor-container" style="height: 100%;">
+                    <div id="editor"></div>
+                </div>
             </div>
             <div class="renderer-tabs">
                 <button id="view-instructions" class="active">Instructions</button>

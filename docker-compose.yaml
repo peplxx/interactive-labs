@@ -1,6 +1,6 @@
 services:
   labenv:
-    image: sh3b0/labenv:stable
+    image: sh3b0/labenv:dev
     container_name: labenv
     ports:
       - "127.0.0.1:3000:3000"
@@ -21,17 +21,6 @@ services:
       - "127.0.0.1:5800:5800"
     volumes:
       - ./workspace/downloads:/config/downloads
-    networks:
-      - lab_net
-    
-  typora:
-    image: sh3b0/typora:1.12.4
-    container_name: typora
-    ports:
-      - "127.0.0.1:5801:5800"
-    volumes:
-      - ./workspace/.config/typora:/config/xdg/config/Typora
-      - ./workspace/docs:/home/ubuntu/docs
     networks:
       - lab_net
 
