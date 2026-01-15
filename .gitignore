@@ -3,6 +3,8 @@ workspace/
 workspace.vm/
 output/
 .vagrant/
+.vscode/
+assets/
 .github/
 *.cast
 !.keep
