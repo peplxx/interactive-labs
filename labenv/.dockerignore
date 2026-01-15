@@ -1,2 +1,7 @@
 node_modules/
 output/
+.vscode/
+assets/
+*.hcl
+*.gotmpl
+Dockerfile*
