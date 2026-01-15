@@ -1,15 +1,21 @@
-<!-- workshop/template.markdown -->
-# Documenting Your Work
+# Reporting Template
 
 > Author: Name Surname (<n.surname@example.com>)
+
+## Instructions
+
+- The content of this `README.md` is loaded into the "Reporting" tab on every refresh.
+- Further changes from the UI are auto-saved to the file (overwriting any previous content)
+- Press `Ctrl+P` to print the report, or manually export `README.md` using your favourite tool (e.g., `markdown-to-pdf` VSCode extension)
+- In Docker environment, the file can be found at `/app/workshop/README.md`
 
 ## Reporting Approach
 
 A good technical report resembles a tutorial ready to be posted on your blog.
 
 1. Clarify used commands or scripts with short explanation.
-
-   ```c++
+   
+   ```cpp
    #include <iostream>
    
    int main() {
@@ -19,26 +25,23 @@ A good technical report resembles a tutorial ready to be posted on your blog.
    ```
 
 2. Include a screenshot of relevant results when appropriate.
-
+   
    > You can store the image locally or use a hosted service like [Imgur](https://imgur.com/upload).
-
+   
     ![result](https://i.imgur.com/hO0tPAb.png)
 
 3. Be brief and concise, nobody likes reading too much text.
 
 
 
-## Checklist
+## Report Quality Checklist
 
-- [x] The report includes author name and related info on the top
-- [x] The report follows a logical structure and clear steps.
-- [x] The report is exported to a convenient format (PDF, HTML).
-- [x] Related artifacts (source code, binary files, etc.) are included if present.
+- [x] Author name and related info on the top
+- [x] Exported to a convenient format (PDF, HTML)
+- [ ] Related artifacts (code, configs, binaries) are included if present.
 - [ ] The file has a meaningful name.
 
-
-
-## Extra ==Features== for Nerds
+## Extra <mark>Features</mark> for Nerds
 
 ### :chart: <u>Tables</u>
 
@@ -53,34 +56,9 @@ $$
 x=\frac{-b\pm\sqrt{b^2-4ac}}{2a}
 $$
 
-### :gear: Mermaid Diagrams
-
-```mermaid
-graph TD;
-    A-->B;
-    A-->C;
-    C-->D;
-```
-
 ### :computer: HTML
 
 <details>
 <summary>Expandable Item</summary>
 Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. 
 </details>
-
-### Distinctive Styling for Significant content
-> [!NOTE]  
-> Highlights information that users should take into account, even when skimming.
-
-> [!TIP]
-> Optional information to help a user be more successful.
-
-> [!IMPORTANT]  
-> Crucial information necessary for users to succeed.
-
-> [!WARNING]  
-> Critical content demanding immediate user attention due to potential risks.
-
-> [!CAUTION]
-> Negative potential consequences of an action.
