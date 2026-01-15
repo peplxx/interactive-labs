@@ -18,28 +18,28 @@ Complement your IT training workshops with a practice environment.
 
 1. Setup the Virtual Machine Manager (VMM) for your platform
 
-   - Windows: [Hyper-V Manager](https://learn.microsoft.com/en-us/windows-server/virtualization/hyper-v/get-started/install-hyper-v)
-   - Linux: [QEMU/KVM + Libvirt + virt-manager](https://christitus.com/vm-setup-in-linux/)
-   - MacOS: [UTM](https://mac.getutm.app/) (with [utmctl](https://docs.getutm.app/scripting/scripting/#command-line-interface))
-   - Hosted (Type-2) Hypervisor: [VirtualBox](https://www.virtualbox.org/wiki/Downloads)
+- Windows: [Hyper-V Manager](https://learn.microsoft.com/en-us/windows-server/virtualization/hyper-v/get-started/install-hyper-v)
+- Linux: [QEMU/KVM + Libvirt + virt-manager](https://christitus.com/vm-setup-in-linux/)
+- MacOS: [UTM](https://mac.getutm.app/) (with [utmctl](https://docs.getutm.app/scripting/scripting/#command-line-interface))
+- Hosted (Type-2) Hypervisor: [VirtualBox](https://www.virtualbox.org/wiki/Downloads)
 
-2. Download the corrsponding box from our [Release](https://github.com/Sh3b0/interactive-labs/releases/tag/boxes) page and import it into vagrant
+1. Download the corrsponding box from our [Release](https://github.com/Sh3b0/interactive-labs/releases/tag/boxes) page and import it into vagrant
 
-   ```bash
-   vagrant box add --name labenv <path_to_box_file>
-   ```
+  ```bash
+  vagrant box add --name labenv <path_to_box_file>
+  ```
 
-3. Install a plugin to integrate with the VMM (no plugins needed for VirtualBox/Hyper-V)
+1. Install a plugin to integrate with the VMM (no plugins needed for VirtualBox/Hyper-V)
 
-    ```bash
-    vagrant plugin install <vagrant-libvirt|vagrant_utm>
-    ```
+  ```bash
+  vagrant plugin install <vagrant-libvirt|vagrant_utm>
+  ```
 
-4. Run the enivonment and access at `http://<VM-IP>:3000`
+1. Run the enivonment and access at `http://<VM-IP>:3000`
 
-   ```bash
-   vagrant up --provider <hyperv|libvirt|utm|virtualbox>
-   ```
+  ```bash
+  vagrant up --provider <hyperv|libvirt|utm|virtualbox>
+  ```
 
 ## Local Development
 
@@ -55,31 +55,32 @@ npm run dev
 
   ```bash
   cd labenv
-  docker build -t labenv .
-  docker run -d -p3000:3000 labenv
+  docker buildx create --name mybuilder --use
+  docker buildx build --platform linux/amd64,linux/arm64 -t labenv:dev --load .
+  docker run -d -p3000:3000 labenv:dev
   ```
 
 - Virtual Machine Environment
 
-  0. Ensure your have Packer, Vagrant, and the required VMM installed
+  1. Ensure your have Packer, Vagrant, and the required VMM installed
 
   1. Download Ubuntu 24.04 base box ([Hyper-V](https://portal.cloud.hashicorp.com/vagrant/discover/sture/ubuntu2404), [Libvirt/VirtualBox](https://portal.cloud.hashicorp.com/vagrant/discover/cloud-images/ubuntu-24.04), [UTM](https://portal.cloud.hashicorp.com/vagrant/discover/utm/noble))
 
-  2. Import it into Vagrant
+  1. Import it into Vagrant
 
-     ```bash
-     vagrant box add --name <name> <path_to_box_file>
-     ```
+    ```bash
+    vagrant box add --name <name> <path_to_box_file>
+    ```
 
-  3. Run the build
+  1. Run the build
 
-     ```bash
-     cd labenv
-     packer init .
-     packer build labenv.pkr.hcl
-     ```
+   ```bash
+    cd labenv
+    packer init .
+    packer build labenv.pkr.hcl
+    ```
 
-  4. If successful, release artifact should be available at `labenv/output/<provider>/package.box`
+  1. If successful, release artifact should be available at `labenv/output/<provider>/package.box`
 
 ## Courses
 
