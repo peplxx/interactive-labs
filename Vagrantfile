@@ -3,11 +3,7 @@
 Vagrant.configure("2") do |config|
   config.vm.box = "labenv"
 
-  # config.vm.box_url = "https://github.com/Sh3b0/interactive-labs/releases/download/boxes/labenv-virtualbox-amd64.box"
-  # config.vm.box_url = "https://github.com/Sh3b0/interactive-labs/releases/download/boxes/labenv-libvirt-amd64.box"
-
-  # config.vm.box_version = "1.0.0"
-  
+  # Different VMMs may require different parameters here
   config.vm.network "private_network", type: "dhcp"
 
   # Trigger to prepare Docker images on the host before bringing up the VM
@@ -31,10 +27,23 @@ Vagrant.configure("2") do |config|
     vb.cpus = 4
   end
 
+  # Hyper-V specific configuration
+  config.vm.provider "hyperv" do |hv|
+    hv.cpus = 4
+    hv.memory = 4096
+  end
+
   # Libvirt specific configuration
   config.vm.provider "libvirt" do |lv|
     lv.memory = 4096
     lv.cpus = 4
+  end
+
+  # UTM specific configuration
+  config.vm.provider "utm" do |utm|
+    utm.name = "labenv"
+    utm.cpus   = 4
+    utm.memory = 4096
   end
 
   # Copy docker-compose file to the VM
