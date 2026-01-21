@@ -1,7 +1,5 @@
 #!/bin/bash
 
-# Takes text input from stdin and sends it (in base64) to clipboard endpoint
-
 text=$(cat | base64 -w0)
 
 curl -X POST -H "Content-Type: application/json" \

@@ -7,8 +7,9 @@ const os = require('os');
 const fs = require('fs');
 const path = require('path');
 
-const entrypointPath = path.join(__dirname, 'scripts', 'entrypoint');
-const entrypoint = fs.existsSync(entrypointPath) ? entrypointPath : os.userInfo().shell;
+// If fish is available, run pty script, else fallback to user's default shell
+const scriptPath = path.join(__dirname, 'scripts', 'start.fish');
+const start = fs.existsSync('/usr/bin/fish') ? scriptPath : os.userInfo().shell;
 
 // Serve static files
 app.use(express.static('public'));
@@ -82,7 +83,7 @@ io.on('connection', (socket) => {
     const terminals = new Map();
 
     socket.on('create-terminal', (termId, callback) => {
-        const ptyProcess = pty.spawn(entrypoint, [], {
+        const ptyProcess = pty.spawn(start, [], {
             name: 'xterm-color',
             cols: 80,
             rows: 30,

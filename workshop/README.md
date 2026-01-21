@@ -4,10 +4,9 @@
 
 ## Instructions
 
-- The content of this `README.md` is loaded into the "Reporting" tab on every refresh.
+- The content you're reading is loaded from `workshop/README.md` into the labenv "Reporting" tab on every page load.
 - Further changes from the UI are auto-saved to the file (overwriting any previous content)
-- Press `Ctrl+P` to print the report, or manually export `README.md` using your favourite tool (e.g., `markdown-to-pdf` VSCode extension)
-- In Docker environment, the file can be found at `/app/workshop/README.md`
+- Press `Ctrl+P` to print this report (A5 papers look decent), or manually export `README.md` using an external tool (e.g., `markdown-to-pdf` VSCode extension)
 
 ## Reporting Approach
 
@@ -32,8 +31,6 @@ A good technical report resembles a tutorial ready to be posted on your blog.
 
 3. Be brief and concise, nobody likes reading too much text.
 
-
-
 ## Report Quality Checklist
 
 - [x] Author name and related info on the top
@@ -55,10 +52,3 @@ A good technical report resembles a tutorial ready to be posted on your blog.
 $$
 x=\frac{-b\pm\sqrt{b^2-4ac}}{2a}
 $$
-
-### :computer: HTML
-
-<details>
-<summary>Expandable Item</summary>
-Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. 
-</details>

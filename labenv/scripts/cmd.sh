@@ -1,20 +1,17 @@
 #!/bin/bash
 
-# CMD script used by the containers
-
 set -xe
 
 sudo chown -R 1000:1000 /home/ubuntu
-mkdir -p /home/ubuntu/.config/zellij
+
+sudo groupadd -g "$(stat -c '%g' /var/run/docker.sock)" docker || true
+sudo usermod -aG docker ubuntu
+
+ln -sf /app/workshop /home/ubuntu/
+
+mkdir -p /home/ubuntu/.config/zellij    
 cp /app/scripts/zellij.kdl /home/ubuntu/.config/zellij/config.kdl
-cp /app/scripts/entrypoint /home/ubuntu/entrypoint
 
-# shellcheck source=/dev/null
-source "/etc/os-release"
+cp /app/scripts/start.fish /home/ubuntu/start.fish
 
-# Start server only if in debian-based container
-if [ "$ID" = "debian" ]; then
-    exec npm run start:server
-else
-  exec npm run start
-fi
+exec npm run start
