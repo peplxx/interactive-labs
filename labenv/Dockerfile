@@ -61,8 +61,7 @@ RUN npm ci
 COPY . .
 RUN npm run build
 
+# Wrap up
 USER ubuntu
-
 EXPOSE 3000 8080
-
 CMD ["/app/scripts/cmd.sh"]

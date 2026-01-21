@@ -1,5 +1,5 @@
 # Lab Environment in a System (VM-Like) Container - with systemd and Docker available inside
-#  Intended for Linux or Windows (WSL2) hosts with docker-ce/docker.io installation (not Docker Desktop).
+# Intended for Linux or Windows (WSL2) hosts with docker-ce/docker.io installation (not Docker Desktop).
 
 services:
   labenv:
