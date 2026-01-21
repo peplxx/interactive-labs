@@ -1,0 +1,6 @@
+{
+  "architecture": "amd64",
+  "provider": "virtualbox",
+  "format": "vmdk",
+  "virtual_size": 10
+}

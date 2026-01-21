@@ -1,23 +1,22 @@
-# https://github.com/alchemy-solutions/vagrant-cloud-images
-
 Vagrant.configure("2") do |config|
   config.vm.box = "labenv"
+  config.vm.box_version = "1.0.0"
 
   # Different VMMs may require different parameters here
   config.vm.network "private_network", type: "dhcp"
 
-  # Trigger to prepare Docker images on the host before bringing up the VM
-  config.trigger.before :up do |trigger|
-    trigger.info = "Caching Docker images via local registry..."
-    trigger.run = {path: "labenv/scripts/trigger.sh"}
-  end
+  # Optional trigger to run some logic on the host before 'vagrant up'
+  # config.trigger.before :up do |trigger|
+  #   trigger.run = {path: "vms/trigger.sh"}
+  # end
 
-  # Disable automatic SSH key insertion to use the default Vagrant key
-  config.ssh.insert_key = false
+  # Initial SSH configuration
+  config.ssh.username = "ubuntu"
+  config.ssh.password = "ubuntu"
   
   # Synced folders
   config.vm.synced_folder ".", "/vagrant", disabled: true
-  config.vm.synced_folder "./workspace.vm", "/home/vagrant", create: true
+  config.vm.synced_folder "./workspace.vm", "/home/ubuntu", create: true
   config.vm.synced_folder "./workshop", "/app/workshop", create: true
   
   # Virtualbox specific configuration
@@ -25,6 +24,7 @@ Vagrant.configure("2") do |config|
     vb.name = "labenv-vm"
     vb.memory = "4096"
     vb.cpus = 4
+    vb.gui = true
   end
 
   # Hyper-V specific configuration
@@ -46,9 +46,6 @@ Vagrant.configure("2") do |config|
     utm.memory = 4096
   end
 
-  # Copy docker-compose file to the VM
-  config.vm.provision "file", source: "docker-compose-vm.yaml", destination: "/tmp/docker-compose.yaml"
-
   # Run provisioning script
-  config.vm.provision "shell", path: "labenv/scripts/provision.sh"
+  config.vm.provision "shell", path: "vms/provision.sh"
 end

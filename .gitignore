@@ -7,5 +7,11 @@ output/
 assets/
 .github/
 *.cast
+*.zip
+*.img
+*.qcow2
+*.vmdk
+*.vhdx
+*.box
 !.keep
 TODO.md

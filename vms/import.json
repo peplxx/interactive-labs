@@ -1,0 +1,22 @@
+{
+    "name": "labenv",
+    "versions": [
+        {
+            "version": "1.0.0",
+            "providers": [
+                {
+                    "name": "libvirt",
+                    "url": "./libvirt/package.box"
+                },
+                {
+                    "name": "virtualbox",
+                    "url": "./virtualbox/package.box"
+                },
+                {
+                    "name": "hyperv",
+                    "url": "./hyperv/package.box"
+                }
+            ]
+        }
+    ]
+}

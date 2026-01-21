@@ -60,27 +60,7 @@ npm run dev
   docker run -d -p3000:3000 labenv:dev
   ```
 
-- Virtual Machine Environment
-
-  1. Ensure your have Packer, Vagrant, and the required VMM installed
-
-  1. Download Ubuntu 24.04 base box ([Hyper-V](https://portal.cloud.hashicorp.com/vagrant/discover/sture/ubuntu2404), [Libvirt/VirtualBox](https://portal.cloud.hashicorp.com/vagrant/discover/cloud-images/ubuntu-24.04), [UTM](https://portal.cloud.hashicorp.com/vagrant/discover/utm/noble))
-
-  1. Import it into Vagrant
-
-    ```bash
-    vagrant box add --name <name> <path_to_box_file>
-    ```
-
-  1. Run the build
-
-   ```bash
-    cd labenv
-    packer init .
-    packer build labenv.pkr.hcl
-    ```
-
-  1. If successful, release artifact should be available at `labenv/output/<provider>/package.box`
+- Virtual Machine Environment: See [vms/README.md](./vms/README.md)
 
 ## Courses
 
