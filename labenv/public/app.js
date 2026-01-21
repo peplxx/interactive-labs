@@ -224,6 +224,7 @@ function createWebTab(url, title) {
     
     const iframe = document.createElement('iframe');
     iframe.src = url;
+    iframe.allow = "clipboard-read; clipboard-write";
     wrapper.appendChild(iframe);
     
     terminalsContainer.appendChild(wrapper);
