@@ -12,6 +12,4 @@ ln -sf /app/workshop /home/ubuntu/
 mkdir -p /home/ubuntu/.config/zellij    
 cp /app/scripts/zellij.kdl /home/ubuntu/.config/zellij/config.kdl
 
-cp /app/scripts/start.fish /home/ubuntu/start.fish
-
-exec npm run start
+exec sudo -E -u ubuntu npm run start
