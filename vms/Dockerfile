@@ -3,7 +3,7 @@
 # Main differences with original Dockerfile:
 # - this is not intended to run as a container
 # - full docker daemon is installed (not just CLI tools)
-# - application is not bundled, will be downloaded during vagrant provisioning
+# - application is not bundled, will be downloaded while provisioning (see provision.sh)
 
 FROM buildpack-deps:noble
 
@@ -15,7 +15,8 @@ apt-get update && yes | unminimize
 
 apt-get install -y sudo man-db vim nano file jq unzip tree procps htop curl wget \
     iputils-ping netcat-openbsd telnet iproute2 net-tools tcpdump traceroute lsof dnsutils \
-    git lsb-release fish asciinema docker.io docker-buildx qemu-guest-agent openssh-server
+    git lsb-release fish asciinema docker.io docker-buildx openssh-server \
+    virtualbox-guest-utils qemu-guest-agent linux-tools-$(uname -r) linux-cloud-tools-$(uname -r)
 
 apt-get clean -y && rm -rf /var/lib/apt/lists/* /var/cache/debconf/* /var/log/* /tmp/* /var/tmp/*
 EOT
@@ -48,6 +49,7 @@ echo "ubuntu:ubuntu" | chpasswd
 usermod -aG sudo ubuntu
 usermod -aG docker ubuntu
 echo "ubuntu ALL=(ALL) NOPASSWD:ALL" >> /etc/sudoers
+echo "PermitRootLogin yes" >> /etc/ssh/sshd_config
 chsh -s /usr/bin/fish ubuntu
 EOT
 

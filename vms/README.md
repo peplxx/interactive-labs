@@ -44,7 +44,7 @@ Instructions to build VMs for the lab environment
         tar -czvf package.box ./*
         ```
 
-1. Import local boxes to Vagrant (update the file for selective imports)
+1. Import local boxes to Vagrant
 
     ```bash
     vagrant box add import.json
