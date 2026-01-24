@@ -23,10 +23,10 @@ Complement your IT training workshops with a practice environment.
     - MacOS: [UTM](https://mac.getutm.app/) (with [utmctl](https://docs.getutm.app/scripting/scripting/#command-line-interface))
     - Hosted (Type-2) Hypervisor: [VirtualBox](https://www.virtualbox.org/wiki/Downloads)
 
-1. Download the corrsponding box from our [Release](https://github.com/Sh3b0/interactive-labs/releases/tag/boxes) page and import it into vagrant
+1. Download the corrsponding box from our [Release](https://github.com/Sh3b0/interactive-labs/releases/tag/boxes) page and import it into vagrant (using [import.json](https://github.com/Sh3b0/interactive-labs/releases/download/boxes/import.json))
 
     ```bash
-    vagrant box add --name labenv <path_to_box_file>
+    vagrant box add import.json
     ```
 
 1. Install a plugin to integrate with the VMM (no plugins needed for VirtualBox/Hyper-V)
