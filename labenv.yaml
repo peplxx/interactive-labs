@@ -1,0 +1,46 @@
+# https://github.com/lima-vm/lima/blob/master/templates/default.yaml
+
+vmType: "qemu" # or "vz" for MacOS Ventura and later
+
+images:
+  - location: "./box.img"
+    arch: x86_64 # or aarch64
+
+cpus: 4
+memory: "4GiB"
+disk: "20GiB"
+
+containerd:
+  system: false
+  user: false
+
+mounts:
+  - location: "{{.Home}}/.lima/workshop"
+    mountPoint: /app/workshop
+    writable: true
+  - location: "{{.Home}}/.lima/provision.sh"
+    mountPoint: /tmp/provision.sh
+
+provision:
+- mode: system
+  script: |
+    bash -c '/tmp/provision.sh'
+
+user:
+  name: ubuntu
+  uid: 1000
+  home: /home/ubuntu
+  shell: /usr/bin/fish
+
+hostResolver:
+  hosts:
+    host.docker.internal: host.lima.internal
+
+# For vz vmType
+# networks:
+#   - vzNAT: true
+
+portForwards:
+  - guestPort: 3000
+  - guestPort: 8080
+  - guestPort: 5800
