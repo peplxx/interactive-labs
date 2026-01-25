@@ -4,6 +4,7 @@ set -Ux fish_greeting ""
 
 # Vars for regular container (with docker socket bind-mounts). Also executes in sysbox container, but errors are ignored there
 if test -f /.dockerenv
+    alias docker='sudo docker'
     set -Ux HOST_WORKDIR "$(docker inspect labenv 2>/dev/null | jq -r '.[0].Mounts[] | select(.Destination=="/home/ubuntu") | .Source' 2>/dev/null)"
     set -Ux HOST_USERNAME "$(docker system info --format '{{.Name}}')"
     set -Ux NETWORK_GATEWAY "$(docker inspect lab_net 2>/dev/null | jq -r '.[0].IPAM.Config[0].Gateway' 2>/dev/null)"
