@@ -2,7 +2,7 @@
 
 Instructions to build and run VMs for the lab environment.
 
-## Run Preconfigured VM Images
+## Run Pre-built VM Images
 
 1. Setup the recommended Virtual Machine Manager (VMM) for your platform
 
@@ -38,11 +38,12 @@ Instructions to build and run VMs for the lab environment.
     tar -xzvf labenv-libvirt-*.box
     ```
 
-1. Copy necessary files to `~/.lima` (to be mounted in the VM)
+1. Copy necessary files to your home directory (to be mounted in the VM)
 
     ```bash
-    cp -r ../workshop ~/.lima
-    cp provision.sh ~/.lima
+    sudo chmod +x ./provision.sh
+    cp provision.sh ../workshop
+    cp -r ../workshop ~
     ```
 
 1. Configure [`labenv.yaml`](./labenv.yaml) as needed

@@ -15,16 +15,14 @@ containerd:
   user: false
 
 mounts:
-  - location: "{{.Home}}/.lima/workshop"
+  - location: "{{.Home}}/workshop"
     mountPoint: /app/workshop
     writable: true
-  - location: "{{.Home}}/.lima/provision.sh"
-    mountPoint: /tmp/provision.sh
 
 provision:
 - mode: system
   script: |
-    bash -c '/tmp/provision.sh'
+    /app/workshop/provision.sh
 
 user:
   name: ubuntu
