@@ -5,7 +5,6 @@ output/
 .vagrant/
 .vscode/
 assets/
-.github/
 *.cast
 *.zip
 *.img

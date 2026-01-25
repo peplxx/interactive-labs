@@ -1,0 +1,104 @@
+name: Build VM Images
+
+on:
+  workflow_dispatch:
+    inputs:
+      provider:
+        description: 'Provider to build'
+        required: true
+        default: 'libvirt'
+        type: choice
+        options:
+        - libvirt
+        - virtualbox
+        - hyperv
+      arch:
+        description: 'Architecture'
+        required: true
+        default: 'amd64'
+        type: choice
+        options:
+        - amd64
+        - arm64
+
+permissions:
+  contents: write
+
+jobs:
+  build:
+    name: Build VM Images
+    runs-on: ${{ inputs.arch == 'arm64' && 'ubuntu-24.04-arm' || 'ubuntu-latest' }}
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up QEMU
+        uses: docker/setup-qemu-action@v3
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
+      - name: Install dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y qemu-utils wget
+
+      - name: Install d2vm
+        run: |
+          wget https://github.com/linka-cloud/d2vm/releases/download/v0.4.0/d2vm_v0.4.0_linux_${{ inputs.arch }}.tar.gz
+          tar -C /usr/local/bin -xzvf d2vm_v0.4.0_linux_${{ inputs.arch }}.tar.gz d2vm
+
+      - name: Build Docker Image
+        uses: docker/build-push-action@v5
+        with:
+          context: vms/build
+          file: vms/build/Dockerfile
+          platforms: linux/${{ inputs.arch }}
+          tags: labenv:vm-${{ inputs.arch }}
+          load: true
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
+
+      - name: Create Raw Disk
+        working-directory: vms/build
+        run: |
+          BOOTLOADER="grub"
+          if [ "${{ inputs.arch }}" = "arm64" ]; then
+            BOOTLOADER="grub-efi"
+          fi
+          
+          sudo d2vm convert \
+            --platform linux/${{ inputs.arch }} \
+            --bootloader $BOOTLOADER \
+            --network-manager netplan \
+            --size 20G \
+            --password vagrant \
+            --output disk-${{ inputs.arch }}.raw \
+            labenv:vm-${{ inputs.arch }}
+
+      - name: Build Libvirt Box
+        if: inputs.provider == 'libvirt'
+        working-directory: vms/build/libvirt
+        run: |
+          qemu-img convert -O qcow2 ../disk-${{ inputs.arch }}.raw box.img
+          tar czfv labenv-libvirt-${{ inputs.arch }}.box ./*
+
+      - name: Build VirtualBox Box
+        if: inputs.provider == 'virtualbox' && inputs.arch == 'amd64'
+        working-directory: vms/build/virtualbox
+        run: |
+          qemu-img convert -O vmdk ../disk-amd64.raw box.vmdk
+          tar czfv labenv-virtualbox-amd64.box ./*
+
+      - name: Build Hyper-V Box
+        if: inputs.provider == 'hyperv' && inputs.arch == 'amd64'
+        working-directory: vms/build/hyperv
+        run: |
+          qemu-img convert -O vhdx ../disk-amd64.raw 'Virtual Hard Disks\labenv.vhdx'
+          find . -maxdepth 1 -mindepth 1 -print0 | tar czfv labenv-hyperv-amd64.box --null -T -
+
+      - name: Upload to Release
+        uses: softprops/action-gh-release@v1
+        with:
+          tag_name: boxes
+          files: vms/build/**/*.box
