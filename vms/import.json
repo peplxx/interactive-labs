@@ -6,15 +6,15 @@
             "providers": [
                 {
                     "name": "libvirt",
-                    "url": "./libvirt/package.box"
+                    "url": "./labenv-libvirt-amd64.box"
                 },
                 {
                     "name": "virtualbox",
-                    "url": "./virtualbox/package.box"
+                    "url": "./labenv-virtualbox-amd64.box"
                 },
                 {
                     "name": "hyperv",
-                    "url": "./hyperv/package.box"
+                    "url": "./labenv-hyperv-amd64.box"
                 }
             ]
         }
