@@ -7,7 +7,7 @@ on:
 env:
   REGISTRY: ghcr.io
   BUILD_CONTEXT: ./labenv/
-  IMAGE_NAME: peplxx/labenv
+  IMAGE_NAME: sh3b0/labenv
 
 jobs:
   image-release:
